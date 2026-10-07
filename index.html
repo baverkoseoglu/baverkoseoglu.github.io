@@ -2,251 +2,174 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baver Köseoğlu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Baver Köseoğlu — Mimar</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --black: #111; --gray: #888; --light: #f4f4f2; --white: #fff;
-    --serif: 'Georgia', serif; --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --gold: rgb(231, 179, 33);
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--sans); background: var(--white); color: var(--black); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
-
-  /* GRID OVERLAY */
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  /* CURSOR */
-  * { cursor: none !important; }
-  .cursor { position: fixed; z-index: 9999; pointer-events: none; top: 0; left: 0; }
-  .cursor-inner { width: 36px; height: 36px; transform: translate(-50%,-50%); transition: transform 0.2s ease; }
-  .cursor-dot { position: fixed; z-index: 10000; pointer-events: none; width: 3px; height: 3px; background: #111; border-radius: 50%; transform: translate(-50%,-50%); }
-  body:has(a:hover) .cursor-inner,
-  body:has(button:hover) .cursor-inner { transform: translate(-50%,-50%) scale(1.4); }
-
-  /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #eee; }
-  .nav-logo img { height: 36px; width: auto; display: block; object-fit: contain; }
-  .nav-right { display: flex; align-items: center; gap: 2rem; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--gray); transition: color 0.2s; }
-  .nav-links a:hover { color: var(--black); }
-  .lang-switcher { display: flex; border: 1px solid #ddd; border-radius: 3px; overflow: hidden; }
-  .lang-btn { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.28rem 0.65rem; border: none; background: transparent; color: var(--gray); transition: all 0.2s; }
-  .lang-btn.active { background: var(--black); color: var(--white); border-left: 2px solid var(--gold); }
-  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 4px; }
-  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--black); transition: all 0.3s; transform-origin: center; }
-  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-  .mobile-menu { display: none; position: fixed; inset: 0; top: var(--nav-h); z-index: 190; background: rgba(255,255,255,0.98); flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a { font-size: 1.4rem; font-family: var(--serif); text-decoration: none; color: var(--black); }
-  .mobile-menu .lang-switcher { margin-top: 1rem; transform: scale(1.2); }
-
-  /* HERO */
-  #home { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 2rem 3rem; position: relative; overflow: hidden; padding-top: var(--nav-h); }
-  .hero-bg { position: absolute; inset: 0; background: url('https://i.imgur.com/4nAfePK.jpeg') center/cover no-repeat; outline: 4px solid transparent; transition: outline-color 0.4s ease; }
-  #home:hover .hero-bg { outline-color: var(--gold); }
-  .hero-bg::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.1) 100%); }
-  .hero-accent { position: absolute; top: 12%; right: 6%; width: 200px; height: 280px; border: 1px solid rgba(255,255,255,0.15); }
-  .hero-content { position: relative; z-index: 1; }
-  .hero-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 0.8rem; }
-  .hero-name { font-family: var(--serif); font-size: clamp(2.2rem,8vw,5rem); font-weight: 400; line-height: 1.1; color: #fff; margin-bottom: 0.8rem; }
-  .hero-sub { font-size: clamp(0.78rem,2.5vw,0.9rem); color: rgba(255,255,255,0.6); max-width: 320px; }
-
-  /* SECTIONS */
-  section { padding: 5rem 2rem; position: relative; z-index: 1; }
-  section:nth-child(even) { background: var(--light); }
-  .section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray); margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem; border-left: 2px solid var(--gold); padding-left: 0.8rem; }
-  .draw-line { display: block; width: 0; height: 1px; background: #ccc; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-  .section-label.visible .draw-line { width: 60px; }
-
-  /* FEATURED */
-  .featured-project { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid #e0e0e0; }
-  .featured-visual { position: relative; padding-top: 75%; overflow: hidden; background: url('https://i.imgur.com/LWJApJm.jpeg') center/cover no-repeat; outline: 3px solid transparent; transition: outline-color 0.3s ease; }
-  .featured-visual:hover { outline-color: var(--gold); }
-  .featured-tag { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.7rem; }
-  .featured-title { font-family: var(--serif); font-size: clamp(1.2rem,3vw,2rem); font-weight: 400; line-height: 1.25; margin-bottom: 1rem; }
-  .featured-body { font-size: 0.85rem; color: #555; line-height: 1.8; margin-bottom: 1.5rem; }
-  .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tag { font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid #ddd; color: var(--gray); }
-
-  /* PROJECTS GRID */
-  .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 3px; }
-  .project-card { overflow: hidden; background: var(--black); }
-  .project-thumb { width: 100%; padding-top: 68%; position: relative; overflow: hidden; }
-  .project-thumb-inner { position: absolute; inset: 0; transition: transform 0.5s ease, opacity 0.4s; background-size: cover !important; background-position: center !important; }
-  .project-card:hover .project-thumb-inner { transform: scale(1.04); opacity: 0.85; }
-  .project-info { padding: 1rem 1.2rem 1.3rem; background: var(--white); border-top: 1px solid #eee; }
-  .project-meta { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.3rem; }
-  .project-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; margin-bottom: 0.4rem; }
-  .project-desc { font-size: 0.78rem; color: #666; line-height: 1.5; }
-
-  /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
-  .about-visual { position: sticky; top: calc(var(--nav-h) + 1rem); }
-  .about-portrait { width: 100%; aspect-ratio: 3/4; overflow: hidden; outline: 3px solid transparent; transition: outline-color 0.3s ease; }
-  .about-portrait:hover { outline-color: var(--gold); }
-  .about-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(100%); display: block; }
-  .about-caption { font-size: 0.68rem; letter-spacing: 0.1em; color: var(--gray); margin-top: 0.8rem; text-transform: uppercase; }
-  .about-body h2 { font-family: var(--serif); font-size: clamp(1.2rem,3vw,1.8rem); font-weight: 400; line-height: 1.35; margin-bottom: 1.5rem; }
-  .about-body p { font-size: 0.88rem; color: #444; line-height: 1.9; margin-bottom: 1.2rem; }
-  .interests { margin-top: 2rem; padding-top: 1.8rem; border-top: 1px solid #e8e8e8; }
-  .interests-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.8rem; }
-  .interests-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
-  .interest-item { font-size: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
-  .interest-item::before { content: ''; width: 14px; height: 1px; background: var(--black); flex-shrink: 0; }
-
-  /* CONTACT */
-  #contact { text-align: center; min-height: 55vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 5rem 2rem; }
-  .contact-eyebrow { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 1.2rem; }
-  .contact-headline { font-family: var(--serif); font-size: clamp(1.6rem,6vw,3.5rem); font-weight: 400; line-height: 1.2; margin-bottom: 1.8rem; max-width: 560px; }
-  .contact-email { font-size: clamp(0.82rem,2.5vw,1rem); color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 2px; margin-bottom: 2.5rem; display: inline-block; transition: opacity 0.2s; }
-  .contact-email:hover { opacity: 0.5; }
-  .contact-email::after { content: ''; display: block; height: 1px; background: var(--gold); width: 0; transition: width 0.3s ease; }
-  .contact-email:hover::after { width: 100%; }
-  .social-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem 2rem; list-style: none; }
-  .social-links a { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: color 0.2s; }
-  .social-links a:hover { color: var(--black); }
-
-  /* FOOTER */
-  footer { padding: 1.5rem 2rem; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
-  footer span { font-size: 0.68rem; color: var(--gray); letter-spacing: 0.08em; }
-
-  /* LIGHTBOX */
-  .lightbox { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.4s, visibility 0.4s; }
-  .lightbox.open { opacity: 1; visibility: visible; }
-  .lightbox img { max-width: 95vw; max-height: 95vh; width: auto; height: auto; object-fit: contain; transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); display: block; }
-  .lightbox.open img { transform: scale(1); }
-  .lightbox-close {
-    position: fixed; top: 1.2rem; right: 1.5rem;
-    width: 44px; height: 44px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 50%;
-    color: #fff; font-size: 1.2rem;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s;
-    z-index: 10000;
-  }
-  .lightbox-close:hover { background: rgba(255,255,255,0.25); }
-  .lightbox-caption { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.45); white-space: nowrap; z-index: 10000; }
-  .lightbox-nav { position: fixed; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); font-size: 1.8rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; z-index: 10000; }
-  .lightbox-nav:hover { background: rgba(255,255,255,0.18); color: #fff; }
-  .lightbox-prev { left: 1.2rem; }
-  .lightbox-next { right: 1.2rem; }
-
-  /* ANIMATIONS */
-  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal-left.visible { opacity: 1; transform: translateX(0); }
-  .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal-right.visible { opacity: 1; transform: translateX(0); }
-  .build-text .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
-  .build-text .char { display: inline-block; opacity: 0; transform: translateY(100%); transition: opacity 0.4s ease, transform 0.4s ease; }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .featured-project { grid-template-columns: 1fr; gap: 2rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-visual { position: static; }
-    .about-portrait { max-width: 280px; }
-  }
-  @media (max-width: 600px) {
-    nav { padding: 0 1.2rem; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    section { padding: 4rem 1.2rem; }
-    #home { padding: 0 1.2rem 2.5rem; }
-    .hero-accent { display: none; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .interests-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; text-align: center; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#111;--gray:#888;--light:#f4f4f2;--white:#fff;--line:#e8e8e8;--grid:rgba(0,0,0,.03);--navbg:rgba(255,255,255,.95);--serif:Georgia,serif;--sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--gold:rgb(231,179,33);--nav-h:60px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--black:#f2f2f0;--gray:#9a9a9a;--light:#1a1a1a;--white:#111;--line:#2a2a2a;--grid:rgba(255,255,255,.04);--navbg:rgba(17,17,17,.95)}}
+:root[data-theme="dark"]{--black:#f2f2f0;--gray:#9a9a9a;--light:#1a1a1a;--white:#111;--line:#2a2a2a;--grid:rgba(255,255,255,.04);--navbg:rgba(17,17,17,.95)}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:var(--sans);background:var(--white);color:var(--black);font-size:15px;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:40px 40px}
+@media(hover:hover){*{cursor:none!important}}
+.cursor,.cursor-dot{display:none}
+@media(hover:hover){.cursor,.cursor-dot{display:block}}
+.cursor{position:fixed;z-index:9999;pointer-events:none;top:0;left:0}
+.cursor-inner{width:38px;height:38px;border:1px solid var(--black);border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:transparent;transition:width .35s cubic-bezier(.2,.8,.2,1),height .35s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s,color .2s,transform .2s;animation:breathe 2.6s ease-in-out infinite}
+.cursor-inner::before,.cursor-inner::after{content:'';position:absolute;background:var(--black);transition:opacity .2s,transform .35s}
+.cursor-inner::before{width:1px;height:8px;top:-5px;left:50%}
+.cursor-inner::after{width:8px;height:1px;left:-5px;top:50%}
+.cursor.hover .cursor-inner{width:68px;height:68px;border-color:var(--gold);background:rgba(231,179,33,.18);animation:none}
+.cursor.hover .cursor-inner::before,.cursor.hover .cursor-inner::after{opacity:0}
+.cursor.view .cursor-inner{width:92px;height:92px;border-color:var(--gold);background:var(--gold);color:#111;animation:none}
+.cursor.view .cursor-inner::before,.cursor.view .cursor-inner::after{opacity:0}
+.cursor.down .cursor-inner{transform:translate(-50%,-50%) scale(.8)}
+.cursor-dot{position:fixed;z-index:10000;pointer-events:none;width:5px;height:5px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);transition:opacity .2s,width .2s,height .2s}
+.cursor-dot.hide{opacity:0}
+.cursor{display:none!important}
+.cursor-dot{transition:opacity .2s,width .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1)}
+.cursor-dot.big{width:18px;height:18px}
+.cursor-dot.big.pic{width:14px;height:14px}
+.ripple{position:fixed;z-index:9997;pointer-events:none;width:12px;height:12px;border:1px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);animation:ripple .7s ease-out forwards}
+@keyframes ripple{to{width:90px;height:90px;opacity:0}}
+@keyframes breathe{50%{transform:translate(-50%,-50%) scale(1.12)}}
+.cursor-inner{will-change:width,height}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:200;height:var(--nav-h);display:flex;justify-content:space-between;align-items:center;padding:0 2rem;background:var(--navbg);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-logo{font-family:var(--serif);font-size:1.05rem;color:var(--black);text-decoration:none;border-left:2px solid var(--gold);padding-left:.6rem}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--gray);transition:color .2s}
+.nav-links a:hover{color:var(--black)}
+.lang-switcher{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.lang-btn{font-size:.68rem;letter-spacing:.1em;padding:.28rem .65rem;border:none;background:transparent;color:var(--gray)}
+.lang-btn.active{background:var(--black);color:var(--white);border-left:2px solid var(--gold)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--black);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;top:calc(var(--nav-h) + env(safe-area-inset-top,0px));z-index:190;background:var(--navbg);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:1.4rem;font-family:var(--serif);text-decoration:none;color:var(--black)}
+#home{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--nav-h) 2rem 3rem;position:relative;overflow:hidden;background:#222}
+.hero-bg{position:absolute;inset:0;background:url('https://i.imgur.com/4nAfePK.jpeg') center/cover no-repeat,linear-gradient(135deg,#2b2b2b,#111);outline:4px solid transparent;transition:outline-color .4s}
+#home:hover .hero-bg{outline-color:var(--gold)}
+.hero-bg::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,.25) 60%,rgba(0,0,0,.1))}
+.hero-accent{position:absolute;top:12%;right:6%;width:200px;height:280px;border:1px solid rgba(255,255,255,.15)}
+.hero-content{position:relative;z-index:1}
+.hero-label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.8rem}
+.hero-name{font-family:var(--serif);font-size:clamp(2.2rem,8vw,5rem);font-weight:400;line-height:1.1;color:#fff;margin-bottom:.8rem}
+.hero-sub{font-size:clamp(.78rem,2.5vw,.9rem);color:rgba(255,255,255,.7);max-width:320px}
+section{padding:5rem 2rem;position:relative;z-index:1}
+section:nth-child(even){background:var(--light)}
+.section-label{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:2.5rem;display:flex;align-items:center;gap:1rem;border-left:2px solid var(--gold);padding-left:.8rem}
+.draw-line{display:block;width:0;height:1px;background:var(--gray);opacity:.5;transition:width .8s}
+.section-label.visible .draw-line{width:60px}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
+.project-card{overflow:hidden;background:var(--gold);outline:3px solid transparent;transition:outline-color .3s}
+.project-card:hover{outline-color:var(--gold)}
+.project-thumb{width:100%;padding-top:68%;position:relative;overflow:hidden;background:#2b2b2b}
+.project-thumb-inner{position:absolute;inset:0;transition:transform .5s,opacity .4s;background-size:cover;background-position:center}
+.project-card:hover .project-thumb-inner{transform:scale(1.04);opacity:.82}
+.project-info{padding:1rem 1.2rem 1.3rem;background:var(--white);border-top:1px solid var(--line)}
+.project-meta{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem}
+.project-name{font-family:var(--serif);font-size:.95rem;font-weight:400;margin-bottom:.4rem}
+.project-desc{font-size:.78rem;color:var(--gray);line-height:1.5}
+.exp-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:5rem;align-items:start}
+.job{padding:0 0 1.8rem 1.2rem;margin-bottom:1.8rem;border-left:1px solid var(--line);position:relative}
+.job::before{content:'';position:absolute;left:-4px;top:.45rem;width:7px;height:7px;background:var(--gold);border-radius:50%}
+.job-date{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+.job-role{font-family:var(--serif);font-size:1.1rem;font-weight:400;margin:.2rem 0}
+.job-co{font-size:.82rem;margin-bottom:.4rem}
+.job-desc{font-size:.82rem;color:var(--gray);line-height:1.6;max-width:56ch}
+.edu{padding-top:.2rem}
+.sub-label{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:start}
+.about-visual{position:sticky;top:calc(var(--nav-h) + 1rem)}
+.about-portrait{width:100%;aspect-ratio:3/4;overflow:hidden;background:#2b2b2b;outline:3px solid transparent;transition:outline-color .3s}
+.about-portrait:hover{outline-color:var(--gold)}
+.about-portrait img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(100%);display:block}
+.about-caption{font-size:.68rem;letter-spacing:.1em;color:var(--gray);margin-top:.8rem;text-transform:uppercase}
+.about-body h2{font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.8rem);font-weight:400;line-height:1.35;margin-bottom:1.5rem}
+.about-body .bio{font-size:.9rem;color:var(--gray);line-height:1.75;max-width:62ch}
+.interests{margin-top:2rem;padding-top:1.8rem;border-top:1px solid var(--line)}
+.interests-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem;margin-bottom:1.6rem}
+.interest-item{font-size:.8rem;display:flex;align-items:center;gap:.5rem}
+.interest-item::before{content:'';width:14px;height:1px;background:var(--black);flex-shrink:0}
+#contact{text-align:center;min-height:55vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.contact-eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:1.2rem}
+.contact-headline{font-family:var(--serif);font-size:clamp(1.6rem,6vw,3.5rem);font-weight:400;line-height:1.2;margin-bottom:1.8rem;max-width:560px}
+.contact-email{font-size:clamp(.82rem,2.5vw,1rem);color:var(--black);text-decoration:none;border-bottom:1px solid var(--black);padding-bottom:2px;margin-bottom:2.5rem;display:inline-block}
+.social-links{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem 2rem;list-style:none}
+.social-links a{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s}
+.social-links a:hover{color:var(--black)}
+footer{padding:1.5rem 2rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;position:relative;z-index:1}
+footer span{font-size:.68rem;color:var(--gray);letter-spacing:.08em}
+.lightbox{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox-inner{display:flex;align-items:center;gap:3rem;max-width:90vw;padding:0 4rem}
+.lightbox-inner img{max-width:60vw;max-height:85vh;object-fit:contain;transition:opacity .2s;flex-shrink:0}
+.lightbox-info{min-width:180px;max-width:240px}
+.lightbox-info h3{font-family:var(--serif);font-size:1.1rem;color:#fff;margin-bottom:1rem;font-weight:400;border-left:2px solid var(--gold);padding-left:.8rem}
+.lightbox-info p{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.7;padding-left:.8rem}
+.lightbox-close,.lightbox-nav{position:fixed;width:44px;height:44px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;z-index:10000}
+.lightbox-close{top:calc(1.2rem + env(safe-area-inset-top,0px));right:1.5rem;border-radius:50%}
+.lightbox-nav{top:50%;transform:translateY(-50%)}
+.lightbox-prev{left:1.2rem}.lightbox-next{right:1.2rem}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s,transform .7s}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s,transform .7s}
+.visible{opacity:1!important;transform:none!important}
+.build-text .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.build-text .char{display:inline-block;opacity:0;transform:translateY(100%);transition:opacity .4s,transform .4s}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal-left,.reveal-right{opacity:1;transform:none;transition:none}.build-text .char{opacity:1;transform:none}}
+@media(max-width:900px){.about-grid,.exp-grid{grid-template-columns:1fr;gap:2.5rem}.about-visual{position:static}.about-portrait{max-width:280px}}
+@media(max-width:600px){nav{padding:0 1.2rem}.nav-links{display:none}.hamburger{display:flex}section{padding:4rem 1.2rem}#home{padding:var(--nav-h) 1.2rem 2.5rem}.hero-accent{display:none}.projects-grid,.interests-grid{grid-template-columns:1fr}footer{flex-direction:column;text-align:center}.lightbox-inner{flex-direction:column;gap:1.5rem;padding:0 1rem}.lightbox-inner img{max-width:90vw;max-height:60vh}.lightbox-info{max-width:90vw}}
 </style>
 </head>
 <body>
-
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)">←</button>
-  <div class="lightbox-inner">
-    <img id="lightboxImg" src="" alt="">
-    <div class="lightbox-info">
-      <h3 id="lightboxCaption"></h3>
-      <p id="lightboxDesc"></p>
-    </div>
-  </div>
+  <div class="lightbox-inner"><img id="lightboxImg" src="" alt=""><div class="lightbox-info"><h3 id="lightboxCaption"></h3><p id="lightboxDesc"></p></div></div>
   <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1)">→</button>
 </div>
 
-<!-- LOADER -->
-<div id="loader" style="position:fixed;inset:0;z-index:99999;background:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem;transition:opacity 0.6s ease,visibility 0.6s ease;">
-  <img src="https://i.imgur.com/8SSoBoB.jpeg" alt="Logo" id="loaderLogo" style="height:64px;width:auto;opacity:0;transform:scale(0.85);transition:opacity 0.6s ease,transform 0.6s ease;">
-  <div style="position:relative;width:160px;height:1px;background:#eee;overflow:hidden;">
-    <div id="loaderLine" style="position:absolute;left:0;top:0;height:100%;width:0;background:#111;transition:width 2.4s cubic-bezier(0.4,0,0.2,1);"></div>
-  </div>
+<div id="loader" style="position:fixed;inset:0;z-index:99999;background:var(--white);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem;transition:opacity .6s,visibility .6s">
+  <div id="loaderLogo" style="font-family:Georgia,serif;font-size:1.6rem;opacity:0;transform:scale(.85);transition:opacity .6s,transform .6s;border-left:2px solid var(--gold);padding-left:.8rem">Baver Köseoğlu</div>
+  <div style="position:relative;width:160px;height:1px;background:var(--line);overflow:hidden"><div id="loaderLine" style="position:absolute;left:0;top:0;height:100%;width:0;background:var(--black);transition:width 2.4s cubic-bezier(.4,0,.2,1)"></div></div>
 </div>
 
-<!-- CURSOR -->
-<div class="cursor" id="cursor">
-  <svg class="cursor-inner" viewBox="0 0 36 36" fill="none">
-    <circle cx="18" cy="18" r="14" stroke="#111" stroke-width="1"/>
-    <circle cx="18" cy="18" r="1.5" fill="#111"/>
-    <line x1="18" y1="2"  x2="18" y2="11" stroke="#111" stroke-width="1"/>
-    <line x1="18" y1="25" x2="18" y2="34" stroke="#111" stroke-width="1"/>
-    <line x1="2"  y1="18" x2="11" y2="18" stroke="#111" stroke-width="1"/>
-    <line x1="25" y1="18" x2="34" y2="18" stroke="#111" stroke-width="1"/>
-  </svg>
-</div>
+<div class="cursor" id="cursor"><div class="cursor-inner" id="cursorLabel"></div></div>
 <div class="cursor-dot" id="cursorDot"></div>
 
-<!-- NAV -->
 <nav>
-  <a href="#home" class="nav-logo">
-    <img src="https://i.imgur.com/8SSoBoB.jpeg" alt="Baver Köseoğlu">
-  </a>
+  <a href="#home" class="nav-logo">Baver Köseoğlu</a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="#home"     data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
-      <li><a href="#projects" data-tr="Projeler"  data-en="Projects">Projeler</a></li>
-      <li><a href="#about"    data-tr="Hakkımda"  data-en="About">Hakkımda</a></li>
-      <li><a href="#contact"  data-tr="İletişim"  data-en="Contact">İletişim</a></li>
+      <li><a href="#home" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
+      <li><a href="#projects" data-tr="Projeler" data-en="Projects">Projeler</a></li>
+      <li><a href="#experience" data-tr="Deneyim" data-en="Experience">Deneyim</a></li>
+      <li><a href="#about" data-tr="Hakkımda" data-en="About">Hakkımda</a></li>
+      <li><a href="#contact" data-tr="İletişim" data-en="Contact">İletişim</a></li>
     </ul>
-    <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('tr')">TR</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-    </div>
-    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('tr')">TR</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#home"     data-tr="Ana Sayfa" data-en="Home"     onclick="toggleMenu()">Ana Sayfa</a>
-  <a href="#projects" data-tr="Projeler"  data-en="Projects" onclick="toggleMenu()">Projeler</a>
-  <a href="#about"    data-tr="Hakkımda"  data-en="About"    onclick="toggleMenu()">Hakkımda</a>
-  <a href="#contact"  data-tr="İletişim"  data-en="Contact"  onclick="toggleMenu()">İletişim</a>
-  <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('tr')">TR</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
-  </div>
+  <a href="#home" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
+  <a href="#projects" data-tr="Projeler" data-en="Projects">Projeler</a>
+  <a href="#experience" data-tr="Deneyim" data-en="Experience">Deneyim</a>
+  <a href="#about" data-tr="Hakkımda" data-en="About">Hakkımda</a>
+  <a href="#contact" data-tr="İletişim" data-en="Contact">İletişim</a>
+  <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('tr')">TR</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
 </div>
 
-<!-- HERO -->
 <section id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-accent"></div>
+  <div class="hero-bg"></div><div class="hero-accent"></div>
   <div class="hero-content">
     <p class="hero-label" data-tr="Mimarlık / Mekân / Toplum" data-en="Architecture / Territory / Society">Mimarlık / Mekân / Toplum</p>
     <h1 class="hero-name">Baver<br>Köseoğlu</h1>
@@ -254,219 +177,110 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
-  <p class="section-label reveal" data-tr="Seçili Projeler" data-en="Selected Projects">Seçili Projeler <span class="draw-line"></span></p>
-  <div class="featured-project" style="display:none"></div>
+  <p class="section-label reveal"><span data-tr="Konsept Projeler" data-en="Concept Projects">Konsept Projeler</span><span class="draw-line"></span></p>
   <div class="projects-grid">
-    <div class="project-card reveal" style="transition-delay:0s">
-      <div class="project-thumb" onclick="openLightbox(0)"><div class="project-thumb-inner" style="background:url('https://i.imgur.com/LWJApJm.jpeg') center/cover"></div></div>
-      <div class="project-info">
-        <p class="project-meta">Studio</p>
-        <h3 class="project-name" data-tr="Hareket Merkezi" data-en="Movement Center">Hareket Merkezi</h3>
-        <p class="project-desc" data-tr="Yarı olimpik havuz, konferans salonu, yoga merkezi, spor salonu ve restoran işlevleri tek çatı altında buluşturulmuştur." data-en="A semi-Olympic pool, conference hall, yoga studio, gym and restaurant brought together under one roof.">Yarı olimpik havuz, konferans salonu, yoga merkezi, spor salonu ve restoran işlevleri tek çatı altında buluşturulmuştur.</p>
-      </div>
+    <div class="project-card reveal"><div class="project-thumb" onclick="openLightbox(0)"><div class="project-thumb-inner" style="background-image:url('https://i.imgur.com/LWJApJm.jpeg')"></div></div><div class="project-info"><p class="project-meta" data-tr="Konsept Proje" data-en="Concept Project">Konsept Proje</p><h3 class="project-name" data-tr="Hareket Merkezi" data-en="Movement Center">Hareket Merkezi</h3><p class="project-desc" data-tr="Yarı olimpik havuz, konferans salonu, yoga merkezi, spor salonu ve restoran işlevleri tek çatı altında buluşturulmuştur." data-en="A semi-Olympic pool, conference hall, yoga studio, gym and restaurant brought together under one roof.">Yarı olimpik havuz, konferans salonu, yoga merkezi, spor salonu ve restoran işlevleri tek çatı altında buluşturulmuştur.</p></div></div>
+    <div class="project-card reveal"><div class="project-thumb" onclick="openLightbox(1)"><div class="project-thumb-inner" style="background-image:url('https://i.imgur.com/uhZY7qg.jpeg')"></div></div><div class="project-info"><p class="project-meta">Kocaeli, İzmit</p><h3 class="project-name" data-tr="Aile Hekimliği Merkezi" data-en="Primary Healthcare Center">Aile Hekimliği Merkezi</h3><p class="project-desc" data-tr="Kamusal sağlık altyapısını yeniden tanımlayan tek katlı bir yapı." data-en="A single-storey building redefining public health infrastructure.">Kamusal sağlık altyapısını yeniden tanımlayan tek katlı bir yapı.</p></div></div>
+    <div class="project-card reveal"><div class="project-thumb" onclick="openLightbox(2)"><div class="project-thumb-inner" style="background-image:url('https://i.imgur.com/PT91OWY.jpeg')"></div></div><div class="project-info"><p class="project-meta">İstanbul, Bostancı</p><h3 class="project-name" data-tr="Bostancı Kültür Merkezi" data-en="Bostancı Cultural Center">Bostancı Kültür Merkezi</h3><p class="project-desc" data-tr="Sirkülasyon aksları ve doğal ışık kullanımı üzerine kurulu iç mekan kurgusu." data-en="Interior spatial logic built upon circulation axes and natural light.">Sirkülasyon aksları ve doğal ışık kullanımı üzerine kurulu iç mekan kurgusu.</p></div></div>
+    <div class="project-card reveal"><div class="project-thumb" onclick="openLightbox(3)"><div class="project-thumb-inner" style="background-image:url('https://i.imgur.com/BkoFZEX.jpeg')"></div></div><div class="project-info"><p class="project-meta" data-tr="Konsept Proje" data-en="Concept Project">Konsept Proje</p><h3 class="project-name" data-tr="Platform Müze & Sanat Merkezi" data-en="Platform Museum & Art Center">Platform Müze & Sanat Merkezi</h3><p class="project-desc" data-tr="'Platform' konsepti üzerine kurulu yapı; çakışan yatay düzlemler ve kırık geometrilerle ziyaretçiyi katmanlı bir mekânsal deneyime davet eder." data-en="Built on the concept of 'platform', the project invites visitors into a layered spatial experience through intersecting planes and fractured geometries.">'Platform' konsepti üzerine kurulu yapı; çakışan yatay düzlemler ve kırık geometrilerle ziyaretçiyi katmanlı bir mekânsal deneyime davet eder.</p></div></div>
+  </div>
+</section>
+
+<section id="experience">
+  <p class="section-label reveal"><span data-tr="İş Deneyimi" data-en="Experience">İş Deneyimi</span><span class="draw-line"></span></p>
+  <div class="exp-grid">
+    <div class="reveal">
+      <div class="job"><p class="job-date" data-tr="Eyl 2026 – Günümüz · Ankara" data-en="Sep 2026 – Present · Ankara">Eyl 2026 – Günümüz · Ankara</p><h3 class="job-role" data-tr="Mimar — Ruhsat Projesi" data-en="Architect — Permit Projects">Mimar — Ruhsat Projesi</h3><p class="job-co">Başkent Yapı</p><p class="job-desc" data-tr="Ruhsat projelerinin hazırlanması ve ilgili teknik süreçlerin yürütülmesi." data-en="Preparing building permit projects and managing the related technical processes.">Ruhsat projelerinin hazırlanması ve ilgili teknik süreçlerin yürütülmesi.</p></div>
+      <div class="job"><p class="job-date">2023 – 2025</p><h3 class="job-role" data-tr="Şantiye Denetçisi / Mimar / Gayrimenkul & Sosyal Medya Yöneticisi" data-en="Site Supervisor / Architect / Real Estate & Social Media Manager">Şantiye Denetçisi / Mimar / Gayrimenkul & Sosyal Medya Yöneticisi</h3><p class="job-co">Yalçınergen Architecture</p><p class="job-desc" data-tr="Hunza Camp projesinde 8 ay boyunca sahada şantiye denetçiliği üstlendim. Diğer dönemlerde ofiste mimari proje geliştirme, gayrimenkul satış raporlaması ve sosyal medya yönetimi pozisyonlarında görev aldım." data-en="Served as on-site construction supervisor on the Hunza Camp project for 8 months. At other times, worked in the office on architectural project development, real estate sales reporting and social media management.">Hunza Camp projesinde 8 ay boyunca sahada şantiye denetçiliği üstlendim. Diğer dönemlerde ofiste mimari proje geliştirme, gayrimenkul satış raporlaması ve sosyal medya yönetimi pozisyonlarında görev aldım.</p></div>
+      <div class="job"><p class="job-date" data-tr="2022 · 3 Ay" data-en="2022 · 3 Months">2022 · 3 Ay</p><h3 class="job-role" data-tr="Stajyer Mimar" data-en="Architect Intern">Stajyer Mimar</h3><p class="job-co">Artun Mimarlık</p><p class="job-desc" data-tr="Ruhsat projelerinin hazırlanması ve 3D modelleme çalışmalarına destek." data-en="Supported the preparation of permit projects and 3D modelling work.">Ruhsat projelerinin hazırlanması ve 3D modelleme çalışmalarına destek.</p></div>
     </div>
-    <div class="project-card reveal" style="transition-delay:0.1s">
-      <div class="project-thumb" onclick="openLightbox(1)"><div class="project-thumb-inner" style="background:url('https://i.imgur.com/uhZY7qg.jpeg') center/cover"></div></div>
-      <div class="project-info">
-        <p class="project-meta">Kocaeli, İzmit</p>
-        <h3 class="project-name" data-tr="Aile Hekimliği Merkezi" data-en="Primary Healthcare Center">Aile Hekimliği Merkezi</h3>
-        <p class="project-desc" data-tr="Kamusal sağlık altyapısını yeniden tanımlayan tek katlı bir yapı." data-en="A single-storey building redefining public health infrastructure.">Kamusal sağlık altyapısını yeniden tanımlayan tek katlı bir yapı.</p>
-      </div>
-    </div>
-    <div class="project-card reveal" style="transition-delay:0.2s">
-      <div class="project-thumb" onclick="openLightbox(2)"><div class="project-thumb-inner" style="background:url('https://i.imgur.com/PT91OWY.jpeg') center/cover"></div></div>
-      <div class="project-info">
-        <p class="project-meta">İstanbul, Bostancı</p>
-        <h3 class="project-name" data-tr="Bostancı Kültür Merkezi" data-en="Bostancı Cultural Center">Bostancı Kültür Merkezi</h3>
-        <p class="project-desc" data-tr="Sirkülasyon aksları ve doğal ışık kullanımı üzerine kurulu iç mekan kurgusu." data-en="Interior spatial logic built upon circulation axes and natural light.">Sirkülasyon aksları ve doğal ışık kullanımı üzerine kurulu iç mekan kurgusu.</p>
-      </div>
-    </div>
-    <div class="project-card reveal" style="transition-delay:0.3s">
-      <div class="project-thumb" onclick="openLightbox(3)"><div class="project-thumb-inner" style="background:url('https://i.imgur.com/BkoFZEX.jpeg') center/cover"></div></div>
-      <div class="project-info">
-        <p class="project-meta">Studio</p>
-        <h3 class="project-name" data-tr="Platform Müze & Sanat Merkezi" data-en="Platform Museum & Art Center">Platform Müze & Sanat Merkezi</h3>
-        <p class="project-desc" data-tr="'Platform' konsepti üzerine kurulu yapı; çakışan yatay düzlemler ve kırık geometrilerle ziyaretçiyi katmanlı bir mekânsal deneyime davet eder." data-en="Built on the concept of 'platform', the project invites visitors into a layered spatial experience through intersecting planes and fractured geometries.">'Platform' konsepti üzerine kurulu yapı; çakışan yatay düzlemler ve kırık geometrilerle ziyaretçiyi katmanlı bir mekânsal deneyime davet eder.</p>
-      </div>
+    <div class="edu reveal">
+      <p class="sub-label" data-tr="Eğitim" data-en="Education">Eğitim</p>
+      <div class="job"><h3 class="job-role">Kocaeli Üniversitesi</h3><p class="job-desc" data-tr="Mimarlık Fakültesi — Mimarlık Bölümü, mezun." data-en="Faculty of Architecture — Department of Architecture, graduate.">Mimarlık Fakültesi — Mimarlık Bölümü, mezun.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
-  <p class="section-label reveal" data-tr="Hakkımda" data-en="About">Hakkımda <span class="draw-line"></span></p>
+  <p class="section-label reveal"><span data-tr="Hakkımda" data-en="About">Hakkımda</span><span class="draw-line"></span></p>
   <div class="about-grid">
     <div class="about-visual reveal-left">
-      <div class="about-portrait">
-        <img src="https://i.imgur.com/60ivzNQ.jpg" alt="Baver Köseoğlu">
-      </div>
-      <p class="about-caption" data-tr="Baver Köseoğlu — Mimarlık Öğrencisi" data-en="Baver Köseoğlu — Architecture Student">Baver Köseoğlu — Mimarlık Öğrencisi</p>
+      <div class="about-portrait"><img src="https://i.imgur.com/60ivzNQ.jpg" alt="Baver Köseoğlu"></div>
+      <p class="about-caption" data-tr="Baver Köseoğlu — Mimar" data-en="Baver Köseoğlu — Architect">Baver Köseoğlu — Mimar</p>
     </div>
     <div class="about-body reveal-right">
       <h2 class="build-text" data-tr="Mekânı anlamak, insanı anlamakla başlar." data-en="Understanding space begins with understanding people.">Mekânı anlamak, insanı anlamakla başlar.</h2>
-      <p data-tr="2001 yılında Van'da doğdum. Resim ve eskiz çizimine olan tutkum dolayısıyla çocukluk hayalim olan mimarlığı tercih ettim. 2020 yılında Kocaeli Üniversitesi Mimarlık Fakültesi'ni kazanarak bu yolda ilk adımı attım."
-         data-en="I was born in Van in 2001. Driven by my passion for drawing and sketching, I chose architecture — a childhood dream. In 2020 I entered the Faculty of Architecture at Kocaeli University.">
-        2001 yılında Van'da doğdum. Resim ve eskiz çizimine olan tutkum dolayısıyla çocukluk hayalim olan mimarlığı tercih ettim. 2020 yılında Kocaeli Üniversitesi Mimarlık Fakültesi'ni kazanarak bu yolda ilk adımı attım.
-      </p>
-      <p data-tr="Öğrencilik yıllarımda birçok farklı sektörde kısa dönem deneyimler edindim. Ardından yaklaşık 1 yıl boyunca şantiyede ücretli şantiye denetçisi olarak çalıştım. Daha sonra aynı şirkette ofise geçerek emlak ve gayrimenkul sektöründe reklamcılık yaptım."
-         data-en="During my student years I gained experience across various sectors. I then worked as a paid site supervisor for approximately one year. I later moved into real estate advertising at the same company, taking an active role in proposal preparation and presentation design.">
-        Öğrencilik yıllarımda birçok farklı sektörde kısa dönem deneyimler edindim. Ardından yaklaşık 1 yıl boyunca şantiyede ücretli şantiye denetçisi olarak çalıştım. Daha sonra aynı şirkette ofise geçerek emlak ve gayrimenkul sektöründe reklamcılık yaptım.
-      </p>
-      <p data-tr="Mimarlığın yanı sıra Adobe ekosistemini aktif olarak kullanıyorum. Grafik tasarım ve video editörlük alanlarında da kendimi geliştirdim."
-         data-en="Alongside architecture, I actively use the Adobe ecosystem and have developed skills in graphic design and video editing.">
-        Mimarlığın yanı sıra Adobe ekosistemini aktif olarak kullanıyorum. Grafik tasarım ve video editörlük alanlarında da kendimi geliştirdim.
-      </p>
+      <p class="bio" data-tr="Kocaeli Üniversitesi Mimarlık Fakültesi mezunuyum. İnşaat alanında şantiye denetçiliği, emlak sektöründe reklam, pazarlama ve sosyal medya yönetimi gibi farklı pozisyonlarda görev aldım. Mimari bakış açımı Adobe ekosistemiyle harmanlayarak grafik tasarım ve görsel iletişim alanlarında da kendimi geliştirmeye devam ediyorum." data-en="I am a graduate of Kocaeli University Faculty of Architecture. I have worked in roles ranging from construction site supervision to advertising, marketing and social media management in real estate. I blend my architectural perspective with the Adobe ecosystem and keep growing in graphic design and visual communication.">Kocaeli Üniversitesi Mimarlık Fakültesi mezunuyum. İnşaat alanında şantiye denetçiliği, emlak sektöründe reklam, pazarlama ve sosyal medya yönetimi gibi farklı pozisyonlarda görev aldım. Mimari bakış açımı Adobe ekosistemiyle harmanlayarak grafik tasarım ve görsel iletişim alanlarında da kendimi geliştirmeye devam ediyorum.</p>
       <div class="interests">
-        <p class="interests-label" data-tr="Uzmanlık Alanları" data-en="Areas of Focus">Uzmanlık Alanları</p>
+        <p class="sub-label" data-tr="Uzmanlık Alanları" data-en="Areas of Focus">Uzmanlık Alanları</p>
         <div class="interests-grid">
-          <span class="interest-item" data-tr="Mimarlık & Kentsel Tasarım"  data-en="Architecture & Urban Design">Mimarlık & Kentsel Tasarım</span>
-          <span class="interest-item" data-tr="Şantiye & Yapım Süreçleri"   data-en="Site Supervision & Construction">Şantiye & Yapım Süreçleri</span>
-          <span class="interest-item" data-tr="Grafik Tasarım"              data-en="Graphic Design">Grafik Tasarım</span>
-          <span class="interest-item" data-tr="Video Editörlük"             data-en="Video Editing">Video Editörlük</span>
-          <span class="interest-item" data-tr="Emlak & Gayrimenkul"         data-en="Real Estate">Emlak & Gayrimenkul</span>
-          <span class="interest-item" data-tr="Adobe Creative Suite"        data-en="Adobe Creative Suite">Adobe Creative Suite</span>
+          <span class="interest-item" data-tr="Mimarlık Ruhsat Projesi" data-en="Architectural Permit Projects">Mimarlık Ruhsat Projesi</span>
+          <span class="interest-item" data-tr="Kentsel Tasarım" data-en="Urban Design">Kentsel Tasarım</span>
+          <span class="interest-item" data-tr="Şantiye Yönetimi" data-en="Site Management">Şantiye Yönetimi</span>
+          <span class="interest-item" data-tr="3D Modelleme" data-en="3D Modelling">3D Modelleme</span>
+          <span class="interest-item" data-tr="Gayrimenkul" data-en="Real Estate">Gayrimenkul</span>
+          <span class="interest-item" data-tr="Sosyal Medya Yönetimi" data-en="Social Media Management">Sosyal Medya Yönetimi</span>
+          <span class="interest-item" data-tr="Grafik Tasarım" data-en="Graphic Design">Grafik Tasarım</span>
+        </div>
+        <p class="sub-label" data-tr="Yazılım & Araçlar" data-en="Software & Tools">Yazılım & Araçlar</p>
+        <div class="interests-grid">
+          <span class="interest-item">AutoCAD</span><span class="interest-item">ArchiCAD</span>
+          <span class="interest-item">Revit</span><span class="interest-item">SketchUp</span>
+          <span class="interest-item">Lumion</span><span class="interest-item">D5 Render</span>
+          <span class="interest-item">Adobe Photoshop</span><span class="interest-item">Adobe Illustrator</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <p class="contact-eyebrow reveal" data-tr="İletişime Geç" data-en="Get in Touch">İletişime Geç</p>
   <h2 class="contact-headline build-text" data-tr="Birlikte anlamlı şeyler üretelim." data-en="Let's build something meaningful together.">Birlikte anlamlı şeyler üretelim.</h2>
   <a href="mailto:baverkoseoglu1@gmail.com" class="contact-email reveal">baverkoseoglu1@gmail.com</a>
   <ul class="social-links reveal">
     <li><a href="tel:+905511019347">+90 551 101 93 47</a></li>
-    <li><a href="https://www.linkedin.com/in/baver-k%C3%B6seo%C4%9Flu-3a1a42281/" target="_blank">LinkedIn</a></li>
-    <li><a href="https://www.instagram.com/bawer.dwg/" target="_blank">Instagram</a></li>
+    <li><a href="https://www.linkedin.com/in/baver-k%C3%B6seo%C4%9Flu-3a1a42281/" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li><a href="https://www.instagram.com/bawer.dwg/" target="_blank" rel="noopener">Instagram</a></li>
   </ul>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <span>© 2026 Baver Köseoğlu</span>
   <span data-tr="Mimarlık / Mekân / Toplum" data-en="Architecture / Territory / Society">Mimarlık / Mekân / Toplum</span>
 </footer>
 
 <script>
-  // CURSOR
-  const cursor = document.getElementById('cursor');
-  const dot    = document.getElementById('cursorDot');
-  let mx=-100,my=-100,cx=-100,cy=-100;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-  document.addEventListener('mouseleave', () => { cursor.style.opacity='0'; dot.style.opacity='0'; });
-  document.addEventListener('mouseenter', () => { cursor.style.opacity='1'; dot.style.opacity='1'; });
-  (function animCursor() {
-    cx += (mx-cx)*0.12; cy += (my-cy)*0.12;
-    cursor.style.left=cx+'px'; cursor.style.top=cy+'px';
-    dot.style.left=mx+'px'; dot.style.top=my+'px';
-    requestAnimationFrame(animCursor);
-  })();
-
-  // LOADER
-  const loaderLogo = document.getElementById('loaderLogo');
-  const loaderLine = document.getElementById('loaderLine');
-  requestAnimationFrame(() => {
-    loaderLogo.style.opacity='1'; loaderLogo.style.transform='scale(1)';
-    loaderLine.style.width='100%';
-  });
-  setTimeout(() => {
-    const l = document.getElementById('loader');
-    l.style.opacity='0'; l.style.visibility='hidden';
-  }, 3000);
-
-  // SMOOTH SCROLL
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      toggleMenu(true);
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) t.scrollIntoView({ behavior:'smooth' });
-    });
-  });
-
-  // HAMBURGER
-  function toggleMenu(forceClose) {
-    const h = document.getElementById('hamburger');
-    const m = document.getElementById('mobileMenu');
-    const isOpen = m.classList.contains('open');
-    if (forceClose || isOpen) {
-      h.classList.remove('open'); m.classList.remove('open');
-      document.body.style.overflow='';
-    } else {
-      h.classList.add('open'); m.classList.add('open');
-      document.body.style.overflow='hidden';
-    }
-  }
-
-  // LANGUAGE
-  function setLang(lang) {
-    document.querySelectorAll('[data-tr]').forEach(el => {
-      if (!el.classList.contains('build-text')) el.textContent = el.getAttribute('data-'+lang);
-    });
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent===lang.toUpperCase()));
-  }
-
-  // BUILD TEXT
-  document.querySelectorAll('.build-text').forEach(el => {
-    const text = el.textContent;
-    el.innerHTML = text.split(' ').map(w =>
-      `<span class="word">${w.split('').map(c=>`<span class="char">${c}</span>`).join('')}&nbsp;</span>`
-    ).join('');
-  });
-
-  // SCROLL REVEAL
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      if (el.classList.contains('build-text')) {
-        el.querySelectorAll('.char').forEach((c,i) => setTimeout(() => { c.style.opacity='1'; c.style.transform='translateY(0)'; }, i*28));
-      }
-      el.classList.add('visible');
-      obs.unobserve(el);
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.build-text').forEach(el => obs.observe(el));
-
-  // LIGHTBOX
-  const images = [
-    { src:'https://i.imgur.com/LWJApJm.jpeg', caption:'Hareket Merkezi', desc:'Yarı olimpik havuz, konferans salonu, yoga merkezi, spor salonu ve restoran işlevleri tek çatı altında buluşturulmuştur.' },
-    { src:'https://i.imgur.com/uhZY7qg.jpeg', caption:'Aile Hekimliği Merkezi', desc:'Kamusal sağlık altyapısını yeniden tanımlayan tek katlı bir yapı.' },
-    { src:'https://i.imgur.com/PT91OWY.jpeg', caption:'Bostancı Kültür Merkezi', desc:'Sergi alanları ve açık kamusal mekanlarla kentsel dokuya yeni bir katman ekler.' },
-    { src:'https://i.imgur.com/BkoFZEX.jpeg', caption:'Platform Müze & Sanat Merkezi', desc:"'Platform' konsepti üzerine kurulu yapı; çakışan yatay düzlemler ve kırık geometrilerle ziyaretçiyi katmanlı bir mekânsal deneyime davet eder." },
-  ];
-  let cur = 0;
-  function openLightbox(i) {
-    cur=i;
-    document.getElementById('lightboxImg').src=images[i].src;
-    document.getElementById('lightboxCaption').textContent=images[i].caption;
-    document.getElementById('lightboxDesc').textContent=images[i].desc;
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow='hidden';
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow='';
-  }
-  function lightboxNav(d) {
-    cur=(cur+d+images.length)%images.length;
-    const img=document.getElementById('lightboxImg');
-    img.style.opacity='0';
-    setTimeout(()=>{
-      img.src=images[cur].src;
-      document.getElementById('lightboxCaption').textContent=images[cur].caption;
-      document.getElementById('lightboxDesc').textContent=images[cur].desc;
-      img.style.opacity='1';
-    },180);
-  }
-  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeLightbox(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowRight') lightboxNav(1); if(e.key==='ArrowLeft') lightboxNav(-1); });
-  const featuredVisual = document.querySelector('.featured-visual');
-  if (featuredVisual) featuredVisual.addEventListener('click', () => openLightbox(0));
+const cursor=document.getElementById('cursor'),dot=document.getElementById('cursorDot');
+let mx=-100,my=-100,cx=-100,cy=-100;
+const lab=document.getElementById('cursorLabel');
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.classList.remove('hide')});
+document.addEventListener('mouseover',e=>{const t=e.target;const v=t.closest('.project-thumb');const h=t.closest('a,button,.project-card');dot.classList.toggle('big',!!(v||h));cursor.classList.toggle('view',!!v);cursor.classList.toggle('hover',!v&&!!h);lab.textContent=v?(document.documentElement.lang==='en'?'View':'İncele'):''});
+document.addEventListener('mouseleave',()=>dot.classList.add('hide'));
+document.addEventListener('mousedown',e=>{cursor.classList.add('down');const r=document.createElement('div');r.className='ripple';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';document.body.appendChild(r);setTimeout(()=>r.remove(),700)});
+document.addEventListener('mouseup',()=>cursor.classList.remove('down'));
+(function a(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;cursor.style.left=cx+'px';cursor.style.top=cy+'px';dot.style.left=mx+'px';dot.style.top=my+'px';requestAnimationFrame(a)})();
+requestAnimationFrame(()=>{const l=document.getElementById('loaderLogo');l.style.opacity='1';l.style.transform='scale(1)';document.getElementById('loaderLine').style.width='100%'});
+setTimeout(()=>{const l=document.getElementById('loader');l.style.opacity='0';l.style.visibility='hidden'},3000);
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();toggleMenu(true);const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})}));
+function toggleMenu(close){const h=document.getElementById('hamburger'),m=document.getElementById('mobileMenu');if(close||m.classList.contains('open')){h.classList.remove('open');m.classList.remove('open');document.body.style.overflow=''}else{h.classList.add('open');m.classList.add('open');document.body.style.overflow='hidden'}}
+function setLang(l){document.documentElement.lang=l;document.querySelectorAll('[data-tr]').forEach(el=>{if(!el.classList.contains('build-text'))el.textContent=el.getAttribute('data-'+l)});document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l.toUpperCase()))}
+document.querySelectorAll('.build-text').forEach(el=>{el.innerHTML=el.textContent.split(' ').map(w=>`<span class="word">${[...w].map(c=>`<span class="char">${c}</span>`).join('')}&nbsp;</span>`).join('')});
+const obs=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const el=en.target;if(el.classList.contains('build-text'))el.querySelectorAll('.char').forEach((c,i)=>setTimeout(()=>{c.style.opacity='1';c.style.transform='translateY(0)'},i*28));el.classList.add('visible');obs.unobserve(el)}),{threshold:.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.build-text').forEach(el=>obs.observe(el));
+const images=[
+{src:'https://i.imgur.com/LWJApJm.jpeg',caption:'Hareket Merkezi',desc:'Yarı olimpik havuz, konferans salonu, yoga merkezi, spor salonu ve restoran işlevleri tek çatı altında buluşturulmuştur.'},
+{src:'https://i.imgur.com/uhZY7qg.jpeg',caption:'Aile Hekimliği Merkezi',desc:'Kamusal sağlık altyapısını yeniden tanımlayan tek katlı bir yapı.'},
+{src:'https://i.imgur.com/PT91OWY.jpeg',caption:'Bostancı Kültür Merkezi',desc:'Sirkülasyon aksları ve doğal ışık kullanımı üzerine kurulu iç mekan kurgusu.'},
+{src:'https://i.imgur.com/BkoFZEX.jpeg',caption:'Platform Müze & Sanat Merkezi',desc:"'Platform' konsepti üzerine kurulu yapı; çakışan yatay düzlemler ve kırık geometrilerle ziyaretçiyi katmanlı bir mekânsal deneyime davet eder."}];
+let cur=0;
+function show(i){const m=images[i];document.getElementById('lightboxImg').src=m.src;document.getElementById('lightboxCaption').textContent=m.caption;document.getElementById('lightboxDesc').textContent=m.desc}
+function openLightbox(i){cur=i;show(i);document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden'}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow=''}
+function lightboxNav(d){cur=(cur+d+images.length)%images.length;const img=document.getElementById('lightboxImg');img.style.opacity='0';setTimeout(()=>{show(cur);img.style.opacity='1'},180)}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLightbox()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lightboxNav(1);if(e.key==='ArrowLeft')lightboxNav(-1)});
 </script>
 </body>
 </html>
