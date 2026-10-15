@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Baver Köseoğlu — Mimar</title>
-<meta name="description" content="Baver Köseoğlu — Mimar. Ruhsat projeleri, şantiye denetimi, 3D modelleme ve mimari konsept projeler. Kocaeli Üniversitesi Mimarlık Fakültesi mezunu.">
-<meta property="og:title" content="Baver Köseoğlu — Mimar">
-<meta property="og:description" content="Ruhsat projeleri, şantiye denetimi, 3D modelleme ve mimari konsept projeler.">
+<title>Baver Köseoğlu | Mimar — Portföy</title>
+<meta name="description" content="Mimar Baver Köseoğlu'nun portföyü: mimari ruhsat projeleri, şantiye denetimi, 3D modelleme ve konsept tasarım çalışmaları.">
+<link rel="canonical" href="https://baverkoseoglu.github.io/">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="theme-color" content="#111111">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Baver Köseoğlu","alternateName":"Baver Köseoğlu — Mimar","url":"https://baverkoseoglu.github.io/"},{"@type":"Person","name":"Baver Köseoğlu","jobTitle":"Mimar","url":"https://baverkoseoglu.github.io/","email":"mailto:baverkoseoglu1@gmail.com","alumniOf":"Kocaeli Üniversitesi","sameAs":["https://www.linkedin.com/in/baver-k%C3%B6seo%C4%9Flu-3a1a42281/","https://www.instagram.com/bawer.dwg/"]}]}</script>
+<meta property="og:title" content="Baver Köseoğlu | Mimar — Portföy">
+<meta property="og:description" content="Mimari ruhsat projeleri, şantiye denetimi, 3D modelleme ve konsept tasarım çalışmaları.">
+<meta property="og:image" content="https://baverkoseoglu.github.io/favicon.png">
 <meta property="og:type" content="website">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -39,7 +45,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 @keyframes breathe{50%{transform:translate(-50%,-50%) scale(1.12)}}
 .cursor-inner{will-change:width,height}
 nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:200;height:var(--nav-h);display:flex;justify-content:space-between;align-items:center;padding:0 2rem;background:var(--navbg);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav-logo{font-family:var(--serif);font-size:1.05rem;color:var(--black);text-decoration:none;border-left:2px solid var(--gold);padding-left:.6rem}
+.nav-logo{display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-size:1.05rem;color:var(--black);text-decoration:none}.nav-logo svg{width:34px;height:34px;display:block;flex-shrink:0}
 .nav-right{display:flex;align-items:center;gap:2rem}
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--gray);transition:color .2s}
@@ -155,7 +161,7 @@ footer span{font-size:.68rem;color:var(--gray);letter-spacing:.08em}
 <div class="cursor-dot" id="cursorDot"></div>
 
 <nav>
-  <a href="#home" class="nav-logo">Baver Köseoğlu</a>
+  <a href="#home" class="nav-logo"><svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" fill="#111"/><path d="M7 17V7h10M31 7h10v10M41 31v10H31M17 41H7V31" fill="none" stroke="#e7b321" stroke-width="2"/><text x="24" y="29.5" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="16" fill="#fff">BK</text><path d="M19 34h10" stroke="#e7b321" stroke-width="1.5"/></svg>Baver Köseoğlu</a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#home" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
@@ -197,7 +203,7 @@ footer span{font-size:.68rem;color:var(--gray);letter-spacing:.08em}
   </div>
 </section>
 
-<section id="experience">
+<section id="experience" data-nosnippet>
   <p class="section-label reveal"><span data-tr="İş Deneyimi" data-en="Experience">İş Deneyimi</span><span class="draw-line"></span></p>
   <div class="exp-grid">
     <div class="reveal">
@@ -219,7 +225,7 @@ footer span{font-size:.68rem;color:var(--gray);letter-spacing:.08em}
       <div class="about-portrait"><img src="https://i.imgur.com/60ivzNQ.jpg" alt="Baver Köseoğlu"></div>
       <p class="about-caption" data-tr="Baver Köseoğlu — Mimar" data-en="Baver Köseoğlu — Architect">Baver Köseoğlu — Mimar</p>
     </div>
-    <div class="about-body reveal-right">
+    <div class="about-body reveal-right" data-nosnippet>
       <h2 class="build-text" data-tr="Mekânı anlamak, insanı anlamakla başlar." data-en="Understanding space begins with understanding people.">Mekânı anlamak, insanı anlamakla başlar.</h2>
       <p class="bio" data-tr="Kocaeli Üniversitesi Mimarlık Fakültesi mezunuyum. İnşaat alanında şantiye denetçiliği, emlak sektöründe reklam, pazarlama ve sosyal medya yönetimi gibi farklı pozisyonlarda görev aldım. Mimari bakış açımı Adobe ekosistemiyle harmanlayarak grafik tasarım ve görsel iletişim alanlarında da kendimi geliştirmeye devam ediyorum." data-en="I am a graduate of Kocaeli University Faculty of Architecture. I have worked in roles ranging from construction site supervision to advertising, marketing and social media management in real estate. I blend my architectural perspective with the Adobe ecosystem and keep growing in graphic design and visual communication.">Kocaeli Üniversitesi Mimarlık Fakültesi mezunuyum. İnşaat alanında şantiye denetçiliği, emlak sektöründe reklam, pazarlama ve sosyal medya yönetimi gibi farklı pozisyonlarda görev aldım. Mimari bakış açımı Adobe ekosistemiyle harmanlayarak grafik tasarım ve görsel iletişim alanlarında da kendimi geliştirmeye devam ediyorum.</p>
       <div class="interests">
