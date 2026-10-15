@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Baver Köseoğlu — Mimar</title>
+<meta name="description" content="Baver Köseoğlu — Mimar. Ruhsat projeleri, şantiye denetimi, 3D modelleme ve mimari konsept projeler. Kocaeli Üniversitesi Mimarlık Fakültesi mezunu.">
+<meta property="og:title" content="Baver Köseoğlu — Mimar">
+<meta property="og:description" content="Ruhsat projeleri, şantiye denetimi, 3D modelleme ve mimari konsept projeler.">
+<meta property="og:type" content="website">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--black:#111;--gray:#888;--light:#f4f4f2;--white:#fff;--line:#e8e8e8;--grid:rgba(0,0,0,.03);--navbg:rgba(255,255,255,.95);--serif:Georgia,serif;--sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--gold:rgb(231,179,33);--nav-h:60px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -52,7 +56,12 @@ nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:200;h
 .mobile-menu.open{display:flex}
 .mobile-menu a{font-size:1.4rem;font-family:var(--serif);text-decoration:none;color:var(--black)}
 #home{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--nav-h) 2rem 3rem;position:relative;overflow:hidden;background:#222}
-.hero-bg{position:absolute;inset:0;background:url('https://i.imgur.com/4nAfePK.jpeg') center/cover no-repeat,linear-gradient(135deg,#2b2b2b,#111);outline:4px solid transparent;transition:outline-color .4s}
+.hero-bg{position:absolute;inset:0;background:url('https://i.imgur.com/4nAfePK.jpeg') center/cover no-repeat,linear-gradient(135deg,#2b2b2b,#111);outline:4px solid transparent;transition:outline-color .4s;will-change:transform;animation:heroIntro 3.6s cubic-bezier(.2,.7,.2,1) 2.4s backwards,heroDrift 24s ease-in-out 6s infinite alternate}
+.hero-bg::after{content:'';position:absolute;inset:-20%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.13) 50%,transparent 60%);transform:translateX(-60%);animation:heroSweep 10s ease-in-out 6s infinite;pointer-events:none}
+@keyframes heroIntro{from{transform:scale(1.28);opacity:.4}to{transform:scale(1.08);opacity:1}}
+@keyframes heroDrift{from{transform:scale(1.08) translate(0,0)}to{transform:scale(1.2) translate(-1.5%,-1.2%)}}
+@keyframes heroSweep{0%{transform:translateX(-60%)}55%,100%{transform:translateX(60%)}}
+@media(prefers-reduced-motion:reduce){.hero-bg,.hero-bg::after{animation:none}}
 #home:hover .hero-bg{outline-color:var(--gold)}
 .hero-bg::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,.25) 60%,rgba(0,0,0,.1))}
 .hero-accent{position:absolute;top:12%;right:6%;width:200px;height:280px;border:1px solid rgba(255,255,255,.15)}
@@ -168,7 +177,7 @@ footer span{font-size:.68rem;color:var(--gray);letter-spacing:.08em}
 </div>
 
 <section id="home">
-  <div class="hero-bg"></div><div class="hero-accent"></div>
+  <div class="hero-bg"></div>
   <div class="hero-content">
     <p class="hero-label" data-tr="Mimarlık / Mekân / Toplum" data-en="Architecture / Territory / Society">Mimarlık / Mekân / Toplum</p>
     <h1 class="hero-name">Baver<br>Köseoğlu</h1>
